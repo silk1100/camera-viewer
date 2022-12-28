@@ -75,36 +75,7 @@
       <property name="title">
        <string>Filter</string>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QRadioButton" name="rdbtn_smooth">
-         <property name="text">
-          <string>smooth</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QRadioButton" name="radioButton_5">
-         <property name="text">
-          <string>RadioButton</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QRadioButton" name="radioButton_7">
-         <property name="text">
-          <string>RadioButton</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QRadioButton" name="radioButton_6">
-         <property name="text">
-          <string>RadioButton</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <layout class="QHBoxLayout" name="horizontalLayout"/>
      </widget>
     </item>
     <item row="1" column="1">
@@ -114,26 +85,10 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="1">
-     <widget class="QScrollBar" name="hrScrl_timer">
-      <property name="minimum">
-       <number>1</number>
-      </property>
-      <property name="maximum">
-       <number>200</number>
-      </property>
-      <property name="value">
-       <number>5</number>
-      </property>
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-     </widget>
-    </item>
     <item row="0" column="0" rowspan="2">
      <widget class="QGroupBox" name="groupBox">
       <property name="styleSheet">
-       <string notr="true">font: bold 11pt &quot;Sans Serif&quot; ;
+       <string notr="true">font-weight: bold 14px &quot;Serif&quot;;
 </string>
       </property>
       <property name="title">
@@ -142,6 +97,10 @@
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
         <widget class="QRadioButton" name="rdbtn_gray">
+         <property name="styleSheet">
+          <string notr="true">font-weight;
+font: 12pt &quot;Serif&quot; bold;</string>
+         </property>
          <property name="text">
           <string>No Colormap</string>
          </property>
@@ -150,7 +109,7 @@
        <item>
         <widget class="QRadioButton" name="rdbtn_jet">
          <property name="styleSheet">
-          <string notr="true">font: 12pt &quot;Sans Serif&quot; bold;</string>
+          <string notr="true"/>
          </property>
          <property name="text">
           <string>Jet</string>
@@ -172,6 +131,22 @@
         </widget>
        </item>
       </layout>
+     </widget>
+    </item>
+    <item row="2" column="1" colspan="2">
+     <widget class="QScrollBar" name="hrScrl_timer">
+      <property name="minimum">
+       <number>1</number>
+      </property>
+      <property name="maximum">
+       <number>200</number>
+      </property>
+      <property name="value">
+       <number>5</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
      </widget>
     </item>
    </layout>

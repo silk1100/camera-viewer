@@ -42,8 +42,24 @@ MainWindow::MainWindow(QWidget *parent)
     filter=0;
     camON=false;
     ui->btn_CMON->setText("Camera OFF");
+    ui->rdbtn_gray->click();
+    colorMap = MYCOLORMAP::GRAY;
+    styleTheGUI();
 }
 
+void MainWindow :: styleTheGUI(){
+    QString styleWidget("QWidget {background-color:#BADBE6; font-family: serif;}");
+
+    QString styleGroupBox("QGroupBox {background-color:#E8B600; font: bold serif 14px;}");
+    QString stylePushBtn("QPushButton {background-color:#F1ECE6; height: 80px; font: bold serif 14px;}");
+    QString styleRadioBtn("QRadioButton {background-color:#F1ECE6; font: bold serif 14px;}");
+
+
+    ui->centralwidget->setStyleSheet(
+        styleWidget+styleGroupBox+stylePushBtn+styleRadioBtn
+    );
+
+}
 
 void MainWindow :: getAllCamId(vector<int> &camIds, int num){
     for (int i=0; i<1000; ++i){
@@ -60,6 +76,9 @@ void MainWindow :: getAllCamId(vector<int> &camIds, int num){
             cout<<"An error was raised at "<<i<<endl;
         }
     }
+
+    camDevList = QMediaDevices::videoInputs();
+    for(auto c: camDevList) camDescriptions.push_back(c.description().toStdString());
 
 }
 
@@ -82,13 +101,6 @@ void MainWindow::on_rdbtn_gray_clicked()
 }
 
 
-void MainWindow::on_rdbtn_smooth_clicked()
-{
-    filter = MYFILTERS::SMOOTH;
-
-}
-
-
 void MainWindow::on_btn_CMON_clicked()
 {
     if(camON){
@@ -100,29 +112,43 @@ void MainWindow::on_btn_CMON_clicked()
        camON=true;
        ui->btn_CMON->setText("camera ON");
        for (int i=0; i<vid.size(); ++i)
-       vid[i].open(currTab, cv::CAP_ANY);
+       vid[i].open(currTab);
     }
 }
 
 
 void MainWindow::on_btn_SCST_clicked()
 {
-    switch (currTab) {
-    case 0:
-        cout<<"MANTIS"<<endl;
-        break;
-    case 1:
-        cout<<"LWIS"<<endl;
-        break;
-    case 2:
-        cout<<"VIS"<<endl;
-        break;
-    case 3:
-        cout<<"SWIR"<<endl;
-        break;
-    default:
-        break;
+    QPixmap pim0 = ui->lbl_cam0->pixmap();
+    QPixmap pim1 = ui->lbl_cam1->pixmap();
+    QPixmap pim2 = ui->lbl_cam2->pixmap();
+    QPixmap pim3 = ui->lbl_cam3->pixmap();
+    pim0.save("image.png");
+    QVector<QPixmap> pimVec = {pim0, pim1, pim2, pim3};
+    QDir outputdir("output");
+    if(!outputdir.exists()){
+        QDir().mkdir("output");
     }
+    QString uOutput =  outputdir.dirName()+QDir::separator()+QDateTime::currentDateTime().toString("yy_MM_dd");
+    if(!QDir(uOutput).exists()){
+        QDir().mkdir(uOutput);
+    }
+    cout<<uOutput.toStdString()<<endl;
+    QString camName = QString::fromStdString(camDescriptions[0]);
+    int i=0;
+    for (auto sname: camDescriptions){
+        QString ssname = QString::fromStdString(sname);
+        ssname = ssname.replace(" ","_");
+        QString outputfile = uOutput+QDir::separator()+
+                          QDateTime::currentDateTime().toString("hh_mm_ss_")
+                          +ssname+QString(".png");
+        cout<<outputfile.toStdString()<<endl;
+        pimVec[i++].save(outputfile);
+    }
+
+
+//    QDateTime::date()
+//    pim0.save(QDateTime::currentDateTime())
 }
 
 
@@ -138,60 +164,52 @@ void MainWindow::timeout_slot()
 
     for(int i=0; i<vid.size(); ++i){
         Mat out;
-
+        cout<<"Device "<<i<<": "<<camDescriptions[i]<<endl;
         vid[camIds[i]].open(camIds[i]);
         vid[camIds[i]].read(out);
+        cout<<vid[camIds[i]].get(cv::CAP_PROP_FOURCC)<<endl;
         if(out.empty()) return;
         QImage *im;
-        if(!i) im=new QImage(out.data, out.cols, out.rows, out.step, QImage::Format_BGR888);
-        else{
+        if(i){
+            cout<<out.type()<<endl;
+            cvtColor(out, out, COLOR_BGR2GRAY);
             if(colorMap == MYCOLORMAP::JET){
-                cvtColor(out, out, COLOR_BGR2GRAY);
                 applyColorMap(out, out, COLORMAP_JET);
-                im=new QImage(out.data, out.cols, out.rows, out.step, QImage::Format_BGR888);
+            }
+            else if(colorMap == MYCOLORMAP::INFERNO){
+                applyColorMap(out, out, COLORMAP_INFERNO);
+            }
+            else if(colorMap == MYCOLORMAP::VIRIDIS){
+                applyColorMap(out, out, COLORMAP_VIRIDIS);
             }
         }
-//        if(out.channels()
-//            if(!i)
-//            im = new QImage(out.data, out.cols, out.rows, out.step, QImage::Format_BGR888);
-//            else{
-//                cvtColor(out, out, COLOR_BGR2GRAY);
-//            	im = new QImage(out.data, out.cols, out.rows, out.step, QImage::Format_Grayscale8);
-//                if
 
-//            }
-//        }else{
-//        if(colorMap==MYCOLORMAP::JET){
-//            applyColorMap(out, out, COLORMAP_JET);
-//            im = new QImage(out.data, out.cols, out.rows, out.step, QImage::Format_BGR888);
-
-//        }else{
-
-//            im = new QImage(out.data, out.cols, out.rows, out.step, QImage::Format_Grayscale8);
-//        }
-
-//        }
-//        cout<<"currTab="<<currTab<<endl;
-        switch(i){
-        case 0:
-        ui->lbl_cam0->setPixmap(QPixmap::fromImage(*im));
-        break;
-        case 1:
-        ui->lbl_cam1->setPixmap(QPixmap::fromImage(*im));
-        break;
-        case 2:
-        ui->lbl_cam2->setPixmap(QPixmap::fromImage(*im));
-        break;
-        case 3:
-        ui->lbl_cam3->setPixmap(QPixmap::fromImage(*im));
-        break;
-        case 4:
-        ui->lbl_cam0->setPixmap(QPixmap::fromImage(*im));
-        break;
-        default:
-        break;
-        }
+        im=new QImage(out.data, out.cols, out.rows, out.step, QImage::Format_BGR888);
+        showOnLabel(i, im);
         delete im;
+    }
+}
+
+void MainWindow :: showOnLabel(int camIdx, QImage *im){
+
+    switch(camIdx){
+    case 0:
+    ui->lbl_cam0->setPixmap(QPixmap::fromImage(*im));
+    break;
+    case 1:
+    ui->lbl_cam1->setPixmap(QPixmap::fromImage(*im));
+    break;
+    case 2:
+    ui->lbl_cam2->setPixmap(QPixmap::fromImage(*im));
+    break;
+    case 3:
+    ui->lbl_cam3->setPixmap(QPixmap::fromImage(*im));
+    break;
+    case 4:
+    ui->lbl_cam0->setPixmap(QPixmap::fromImage(*im));
+    break;
+    default:
+    break;
     }
 }
 
@@ -216,12 +234,12 @@ void MainWindow::on_hrScrl_timer_valueChanged(int value)
 
 void MainWindow::on_rdbtn_inf_clicked()
 {
-
+    colorMap = MYCOLORMAP::INFERNO;
 }
 
 
 void MainWindow::on_rdbtn_vir_clicked()
 {
-
+    colorMap = MYCOLORMAP::VIRIDIS;
 }
 

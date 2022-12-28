@@ -7,6 +7,11 @@
 #include <QLabel>
 #include <QScopedPointer>
 #include <QScopedArrayPointer>
+#include <QDateTime>
+#include <QtMultimedia>
+#include <QList>
+#include <QDir>
+
 
 #include <opencv2/core.hpp>
 #include <opencv2/video.hpp>
@@ -33,8 +38,6 @@ private slots:
 
     void on_rdbtn_gray_clicked();
 
-    void on_rdbtn_smooth_clicked();
-
     void on_btn_CMON_clicked();
 
     void on_btn_SCST_clicked();
@@ -49,23 +52,28 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    // helper methods
+    void getAllCamId(std::vector<int> &camIds, int camnum);
+    void showOnLabel(int camIdx, QImage* im);
+    void styleTheGUI();
 
     // Qt variables
     QScopedPointer<QTimer> timer;
     QScopedArrayPointer<QWidget> widget_array;
     QScopedArrayPointer<QLabel> label_array;
+    QList<QCameraDevice> camDevList;
 
     // OpenCV variables
-    void getAllCamId(std::vector<int> &camIds, int camnum);
     std::vector<int> camIds;
     int colorMap;
     int filter;
     int currTab;
     bool camON;
     std::vector<cv::VideoCapture> vid;
+    std::vector<std::string> camDescriptions;
 
     enum MYCOLORMAP {
-        JET, GRAY
+        JET, GRAY, INFERNO, VIRIDIS
     };
     enum MYFILTERS {
         SMOOTH
