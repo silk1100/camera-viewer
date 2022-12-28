@@ -39,10 +39,13 @@ private slots:
 
     void on_btn_SCST_clicked();
 
-    void on_tabWidget_currentChanged(int index);
     void timeout_slot();
 
     void on_hrScrl_timer_valueChanged(int value);
+
+    void on_rdbtn_inf_clicked();
+
+    void on_rdbtn_vir_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -53,17 +56,18 @@ private:
     QScopedArrayPointer<QLabel> label_array;
 
     // OpenCV variables
-    std::vector<int> getAllCamId(void);
+    void getAllCamId(std::vector<int> &camIds, int camnum);
+    std::vector<int> camIds;
     int colorMap;
     int filter;
     int currTab;
     bool camON;
-    cv::VideoCapture vid;
+    std::vector<cv::VideoCapture> vid;
 
-    enum COLORMAP {
+    enum MYCOLORMAP {
         JET, GRAY
     };
-    enum FILTERS {
+    enum MYFILTERS {
         SMOOTH
     };
 

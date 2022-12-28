@@ -6,91 +6,30 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1252</width>
-    <height>772</height>
+    <width>1329</width>
+    <height>775</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>LightPath - Camera Viewer</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0,0,0">
-    <item row="0" column="1" rowspan="4">
-     <widget class="QTabWidget" name="tabWidget">
-      <property name="currentIndex">
-       <number>0</number>
+   <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0">
+    <item row="2" column="0">
+     <widget class="QLabel" name="lbl_frameRate">
+      <property name="text">
+       <string>Frame-rate: 5</string>
       </property>
-      <widget class="QWidget" name="tab_MAN">
-       <attribute name="title">
-        <string>MANTIS</string>
-       </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
-        <item>
-         <widget class="QLabel" name="lbl_MANTIS">
-          <property name="layoutDirection">
-           <enum>Qt::RightToLeft</enum>
-          </property>
-          <property name="autoFillBackground">
-           <bool>true</bool>
-          </property>
-          <property name="frameShape">
-           <enum>QFrame::Panel</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Sunken</enum>
-          </property>
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="tab_LWR">
-       <attribute name="title">
-        <string>LWIR</string>
-       </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout_5">
-        <item>
-         <widget class="QLabel" name="lbl_LWIR">
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="tab_VIS">
-       <attribute name="title">
-        <string>VIS</string>
-       </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
-        <item>
-         <widget class="QLabel" name="lbl_VIS">
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="tab_SWR">
-       <attribute name="title">
-        <string>SWIR</string>
-       </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout_4">
-        <item>
-         <widget class="QLabel" name="lbl_SWIR">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
      </widget>
     </item>
-    <item row="0" column="2" rowspan="4">
+    <item row="1" column="2">
+     <widget class="QLabel" name="lbl_cam3">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="3" rowspan="2">
      <widget class="QGroupBox" name="groupBox_3">
       <property name="title">
        <string/>
@@ -117,44 +56,21 @@
       </layout>
      </widget>
     </item>
-    <item row="0" column="0" rowspan="4">
-     <widget class="QGroupBox" name="groupBox">
-      <property name="styleSheet">
-       <string notr="true">font: bold 11pt &quot;Sans Serif&quot; ;
-</string>
+    <item row="0" column="1">
+     <widget class="QLabel" name="lbl_cam0">
+      <property name="text">
+       <string/>
       </property>
-      <property name="title">
-       <string>Pallet</string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <widget class="QRadioButton" name="rdbtn_jet">
-         <property name="styleSheet">
-          <string notr="true">font: 12pt &quot;Sans Serif&quot;;</string>
-         </property>
-         <property name="text">
-          <string>jet</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QRadioButton" name="rdbtn_gray">
-         <property name="text">
-          <string>gray</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QRadioButton" name="radioButton_3">
-         <property name="text">
-          <string>RadioButton</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
      </widget>
     </item>
-    <item row="5" column="1">
+    <item row="0" column="2">
+     <widget class="QLabel" name="lbl_cam1">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1" colspan="2">
      <widget class="QGroupBox" name="groupBox_2">
       <property name="title">
        <string>Filter</string>
@@ -191,7 +107,14 @@
       </layout>
      </widget>
     </item>
-    <item row="4" column="1">
+    <item row="1" column="1">
+     <widget class="QLabel" name="lbl_cam2">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
      <widget class="QScrollBar" name="hrScrl_timer">
       <property name="minimum">
        <number>1</number>
@@ -207,11 +130,48 @@
       </property>
      </widget>
     </item>
-    <item row="4" column="0">
-     <widget class="QLabel" name="lbl_frameRate">
-      <property name="text">
-       <string>Frame-rate: 5</string>
+    <item row="0" column="0" rowspan="2">
+     <widget class="QGroupBox" name="groupBox">
+      <property name="styleSheet">
+       <string notr="true">font: bold 11pt &quot;Sans Serif&quot; ;
+</string>
       </property>
+      <property name="title">
+       <string>Pallet</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QRadioButton" name="rdbtn_gray">
+         <property name="text">
+          <string>No Colormap</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="rdbtn_jet">
+         <property name="styleSheet">
+          <string notr="true">font: 12pt &quot;Sans Serif&quot; bold;</string>
+         </property>
+         <property name="text">
+          <string>Jet</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="rdbtn_inf">
+         <property name="text">
+          <string>Inferno</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="rdbtn_vir">
+         <property name="text">
+          <string>Veridis</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
    </layout>
@@ -221,7 +181,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1252</width>
+     <width>1329</width>
      <height>19</height>
     </rect>
    </property>
